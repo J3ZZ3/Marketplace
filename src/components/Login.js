@@ -15,7 +15,7 @@ function Login() {
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       console.log('Logged in:', userCredential.user);
-      navigate('/');
+      navigate('/products');
     } catch (error) {
       setError(error.message);
     }
