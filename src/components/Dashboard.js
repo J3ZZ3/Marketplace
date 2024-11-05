@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setProducts } from '../redux/actions';
 import { db, auth } from '../firebase';
 import { collection, addDoc, getDocs, query, where, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import Navbar from './Navbar';
 import Swal from 'sweetalert2';
 
 const Dashboard = () => {
@@ -62,6 +63,7 @@ const Dashboard = () => {
 
       try {
         if (editingProduct) {
+          // Update existing product
           const productRef = doc(db, 'products', editingProduct.id);
           await updateDoc(productRef, productData);
           setUserProducts(prevProducts => prevProducts.map(p => (p.id === editingProduct.id ? { ...p, ...productData } : p)));
@@ -71,6 +73,7 @@ const Dashboard = () => {
             text: 'Your product has been successfully updated.',
           });
         } else {
+          // Add new product
           await addDoc(collection(db, 'products'), productData);
           setUserProducts(prevProducts => [...prevProducts, { ...productData, id: Date.now() }]);
           Swal.fire({
@@ -80,11 +83,12 @@ const Dashboard = () => {
           });
         }
 
+        // Clear input fields
         setProductName('');
         setProductDescription('');
         setProductPrice('');
         setProductImage(null);
-        setEditingProduct(null);
+        setEditingProduct(null); // Reset editing state
       } catch (error) {
         console.error('Error saving product:', error);
         Swal.fire({
@@ -113,7 +117,7 @@ const Dashboard = () => {
     setProductName(product.name);
     setProductDescription(product.description);
     setProductPrice(product.price);
-    setProductImage(null);
+    setProductImage(null); // Reset image if you don't want to keep it
     setEditingProduct(product);
   };
 
@@ -149,6 +153,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <Navbar />
       <h2>Dashboard</h2>
       
       <div>
@@ -197,8 +202,8 @@ const Dashboard = () => {
               )}
               <p>{product.description}</p>
               <p>${product.price}</p>
-              <button onClick={() => handleEditProduct(product)}>Edit</button> {}
-              <button onClick={() => handleDeleteProduct(product.id)}>Delete</button> {}
+              <button onClick={() => handleEditProduct(product)}>Edit</button> {/* Edit button */}
+              <button onClick={() => handleDeleteProduct(product.id)}>Delete</button> {/* Delete button */}
             </div>
           ))
         ) : (

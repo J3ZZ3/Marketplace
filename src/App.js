@@ -7,6 +7,9 @@ import AddProduct from './components/AddProduct';
 import ProductList from './components/ProductList';
 import Dashboard from './components/Dashboard';
 import Cart from './components/Cart';
+import Payment from './components/Payment';
+
+
 
 
 
@@ -22,6 +25,8 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/payment" element={<Payment />} /> {}
+
         </Routes>
     </Router>
   );

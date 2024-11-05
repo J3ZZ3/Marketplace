@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProducts, addToCart } from '../redux/actions';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import Navbar from './Navbar';
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,8 @@ const ProductList = () => {
 
   return (
     <div>
+          <Navbar />
+
       <h2>Pillock Marketplace</h2>
       {products.length > 0 ? (
         products.map((product) => (

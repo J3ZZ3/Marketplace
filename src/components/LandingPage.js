@@ -5,7 +5,7 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    navigate("/login");
+    navigate("/products");
   };
 
   return (
