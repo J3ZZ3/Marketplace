@@ -1,4 +1,4 @@
-/* Navbar.css */
+
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -9,6 +9,7 @@
 }
 
 .navbar-logo {
+  color: #fff;
   font-size: 20px;
   font-weight: bold;
 }
@@ -19,6 +20,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  
 }
 
 .navbar-links li a {
@@ -29,6 +31,22 @@
 
 .navbar-links li a:hover {
   text-decoration: underline;
+}
+
+.logout-button{
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #2b2c2c;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.logout-button:hover{
+    background-color: #e90808;
+  
 }
 
 /* Responsive Design */
