@@ -1,9 +1,8 @@
-// cartReducer.js
 
 import { ADD_TO_CART, REMOVE_FROM_CART } from '../actions';
 
 const initialState = {
-  items: [], // Initial state with items as an empty array
+  items: [],
 };
 
 const cartReducer = (state = initialState, action) => {
@@ -18,7 +17,7 @@ const cartReducer = (state = initialState, action) => {
       };
 
     default:
-      return state; // Return current state for unrecognized actions
+      return state;
   }
 };
 

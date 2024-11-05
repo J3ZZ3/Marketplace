@@ -10,6 +10,7 @@ const ProductList = () => {
   const products = useSelector((state) => state.products.items);
   const [loading, setLoading] = useState(true);
   const [inCart, setInCart] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchProductsFromFirestore = async () => {
@@ -34,17 +35,34 @@ const ProductList = () => {
     setInCart((prevInCart) => [...prevInCart, product.id]);
   };
 
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value.toLowerCase());
+  };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchQuery)
+  );
+
   if (loading) {
     return <p>Loading products...</p>;
   }
 
   return (
     <div>
-          <Navbar />
+      <Navbar />
 
       <h2>Pillock Marketplace</h2>
-      {products.length > 0 ? (
-        products.map((product) => (
+
+      {/* Search Input */}
+      <input
+        type="text"
+        placeholder="Search for a product..."
+        value={searchQuery}
+        onChange={handleSearch}
+      />
+
+      {filteredProducts.length > 0 ? (
+        filteredProducts.map((product) => (
           <div key={product.id}>
             <h3>{product.name}</h3>
             {product.imageUrl && (

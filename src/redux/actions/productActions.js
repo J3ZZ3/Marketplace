@@ -1,7 +1,6 @@
 import { firestore } from '../../firebase/firebaseConfig';
 import { FETCH_PRODUCTS, ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from '../types';
 
-// Fetch all products
 export const fetchProducts = () => async dispatch => {
   try {
     const snapshot = await firestore.collection('products').get();
@@ -12,7 +11,6 @@ export const fetchProducts = () => async dispatch => {
   }
 };
 
-// Add a new product
 export const addProduct = product => async dispatch => {
   try {
     const docRef = await firestore.collection('products').add(product);
@@ -22,7 +20,6 @@ export const addProduct = product => async dispatch => {
   }
 };
 
-// Update a product
 export const updateProduct = (id, updates) => async dispatch => {
   try {
     await firestore.collection('products').doc(id).update(updates);
@@ -32,7 +29,6 @@ export const updateProduct = (id, updates) => async dispatch => {
   }
 };
 
-// Delete a product
 export const deleteProduct = id => async dispatch => {
   try {
     await firestore.collection('products').doc(id).delete();

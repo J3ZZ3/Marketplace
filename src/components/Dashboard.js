@@ -13,6 +13,7 @@ const Dashboard = () => {
   const [productImage, setProductImage] = useState(null);
   const [userProducts, setUserProducts] = useState([]);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
   const dispatch = useDispatch();
   const user = auth.currentUser;
 
@@ -63,7 +64,6 @@ const Dashboard = () => {
 
       try {
         if (editingProduct) {
-          // Update existing product
           const productRef = doc(db, 'products', editingProduct.id);
           await updateDoc(productRef, productData);
           setUserProducts(prevProducts => prevProducts.map(p => (p.id === editingProduct.id ? { ...p, ...productData } : p)));
@@ -73,7 +73,6 @@ const Dashboard = () => {
             text: 'Your product has been successfully updated.',
           });
         } else {
-          // Add new product
           await addDoc(collection(db, 'products'), productData);
           setUserProducts(prevProducts => [...prevProducts, { ...productData, id: Date.now() }]);
           Swal.fire({
@@ -83,12 +82,11 @@ const Dashboard = () => {
           });
         }
 
-        // Clear input fields
         setProductName('');
         setProductDescription('');
         setProductPrice('');
         setProductImage(null);
-        setEditingProduct(null); // Reset editing state
+        setEditingProduct(null);
       } catch (error) {
         console.error('Error saving product:', error);
         Swal.fire({
@@ -117,7 +115,7 @@ const Dashboard = () => {
     setProductName(product.name);
     setProductDescription(product.description);
     setProductPrice(product.price);
-    setProductImage(null); // Reset image if you don't want to keep it
+    setProductImage(null);
     setEditingProduct(product);
   };
 
@@ -151,11 +149,13 @@ const Dashboard = () => {
     }
   };
 
+  const filteredProducts = userProducts.filter((product) =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <Navbar />
-      <h2>Dashboard</h2>
-      
       <div>
         <h3>{editingProduct ? 'Edit Product' : 'Add New Product'}</h3>
         <input
@@ -189,8 +189,15 @@ const Dashboard = () => {
 
       <div>
         <h3>Your Products</h3>
-        {userProducts.length > 0 ? (
-          userProducts.map((product) => (
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
             <div key={product.id}>
               <h4>{product.name}</h4>
               {product.imageUrl && (
@@ -202,12 +209,12 @@ const Dashboard = () => {
               )}
               <p>{product.description}</p>
               <p>${product.price}</p>
-              <button onClick={() => handleEditProduct(product)}>Edit</button> {/* Edit button */}
-              <button onClick={() => handleDeleteProduct(product.id)}>Delete</button> {/* Delete button */}
+              <button onClick={() => handleEditProduct(product)}>Edit</button>
+              <button onClick={() => handleDeleteProduct(product.id)}>Delete</button>
             </div>
           ))
         ) : (
-          <p>No products added by you yet.</p>
+          <p>No products found.</p>
         )}
       </div>
     </div>

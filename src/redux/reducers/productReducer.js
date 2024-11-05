@@ -10,7 +10,7 @@ const productReducer = (state = initialState, action) => {
       return { ...state, items: [...state.items, action.payload] };
     case REMOVE_PRODUCT:
       return { ...state, items: state.items.filter(item => item.id !== action.payload) };
-    case SET_PRODUCTS: // New case for setting products
+    case SET_PRODUCTS:
       return { ...state, items: action.payload };
     default:
       return state;
