@@ -1,0 +1,147 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #201E1F;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .dashboard {
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;
+  }
+  
+  .db-form-container {
+    background-color: #CDBCA8;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+  }
+  
+  db-h3 {
+    margin-left: 5%;
+    margin-bottom: 15px;
+    color: #000000;
+  }
+
+  .db-input {
+    background-color: #201E1F;
+  }
+  
+  .db-input, .input-file {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    color: #262c31;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+ 
+  
+  .pl-input {
+    width: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-left: 5%;
+    color: #262c31;
+    background-color: #262c31;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  
+  .db-btn {
+    width: 93%;
+    padding: 10px;
+    font-size: 16px;
+    color: #555f68;
+    background-color: #201E1F;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .db-btn:disabled {
+    background-color: #8395a5;
+  }
+  
+  .db-product-list {
+    background-color: #6B7A89;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .db-product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #f1f1f1;
+  }
+  
+  .db-product-card:last-child {
+    border-bottom: none;
+  }
+  
+  .product-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+    color: #333;
+  }
+  
+  .product-description {
+    font-size: 14px;
+    color: #666;
+    text-align: center;
+  }
+  
+  .product-price {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .product-image {
+    width: 100px;
+    height: auto;
+    margin: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .product-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .btn-edit, .btn-delete {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-edit {
+    background-color: #28a745;
+    color: #fff;
+  }
+  
+  .btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+  }
+  
+  .no-products {
+    color: #000000;
+    text-align: center;
+    margin: 20px 0;
+  }
+  

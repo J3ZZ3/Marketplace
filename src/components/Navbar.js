@@ -1,13 +1,22 @@
+// Navbar.js
+
 import React from 'react'; 
 import { Link, useNavigate } from 'react-router-dom';
-import './Navbar.css'
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase'; // assuming you have configured firebase in a separate file
+import './styles/Navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    navigate('/login');
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Log out from Firebase authentication
+      localStorage.removeItem('loggedInUser'); // Clear user data from localStorage
+      navigate('/login'); // Redirect to login page
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   return (

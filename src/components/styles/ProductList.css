@@ -1,0 +1,128 @@
+
+.pl-product-list {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .pl-product-list-title {
+    font-size: 2rem;
+    color: #ffffff;
+    margin-bottom: 20px;
+  }
+  
+  .pl-search-bar {
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+    margin-bottom: 30px;
+    outline: none;
+  }
+  
+  .pl-product-grid {
+  
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+  
+  .pl-product-card {
+    background-color: #ffffffad;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .pl-product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+  
+  .pl-product-name {
+    font-size: 1.25rem;
+    color: #333;
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  
+  .pl-product-image {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .pl-product-description {
+    font-size: 1rem;
+    color: #000000;
+    margin-bottom: 10px;
+  }
+  
+  .product-price {
+    font-size: 1.2rem;
+    color: #00d61d;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+  
+  .pl-add-to-cart-button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #2b2c2c;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .pl-add-to-cart-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .pl-in-cart {
+    font-size: 0.9rem;
+    color: #007bff;
+    font-weight: bold;
+  }
+  
+  .pl-loading-text,
+  .pl-no-products {
+    font-size: 1.2rem;
+    color: #666;
+    margin-top: 20px;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .pl-product-list-title {
+      font-size: 1.75rem;
+    }
+  
+    .pl-product-card {
+      padding: 15px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .pl-search-bar {
+      width: 90%;
+    }
+  
+    .pl-product-list-title {
+      font-size: 1.5rem;
+    }
+  
+    .pl-add-to-cart-button {
+      padding: 8px 12px;
+      font-size: 0.9rem;
+    }
+  }
+  

@@ -3,27 +3,37 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setProducts, addToCart } from '../redux/actions';
 import { db } from '../firebase';
 import { collection, getDocs } from 'firebase/firestore';
+import Swal from 'sweetalert2';
+import './styles/ProductList.css';
 import Navbar from './Navbar';
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.items);
-  const [loading, setLoading] = useState(true);
   const [inCart, setInCart] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchProductsFromFirestore = async () => {
       try {
+        Swal.fire({
+          title: 'Loading Products...',
+          html: 'Please wait while we load the products.',
+          allowOutsideClick: false,
+          didOpen: () => {
+            Swal.showLoading();
+          }
+        });
+
         const productsCollection = collection(db, 'products');
         const productSnapshot = await getDocs(productsCollection);
         const productList = productSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
         dispatch(setProducts(productList));
-        setLoading(false);
       } catch (error) {
         console.error("Error fetching products: ", error);
-        setLoading(false);
+      } finally {
+        Swal.close();
       }
     };
 
@@ -43,47 +53,48 @@ const ProductList = () => {
     product.name.toLowerCase().includes(searchQuery)
   );
 
-  if (loading) {
-    return <p>Loading products...</p>;
-  }
-
   return (
-    <div className='product'>
+    <div>
       <Navbar />
-
-      <h2>Pillock Marketplace</h2>
-
-
+    <div className="pl-product-list">
+      <h2 className="pl-product-list-title">Pillock Marketplace</h2>
+      
       <input
         type="text"
+        className="pl-search-bar"
         placeholder="Search for a product..."
         value={searchQuery}
         onChange={handleSearch}
       />
 
-      {filteredProducts.length > 0 ? (
-        filteredProducts.map((product) => (
-          <div key={product.id}>
-            <h3>{product.name}</h3>
-            {product.imageUrl && (
-              <img 
-                src={product.imageUrl} 
-                alt={product.name} 
-                style={{ width: '250px', height: 'auto' }}
-              />
-            )}
-            <h4>{product.description}</h4>
-            <p>${product.price}</p>
-            {inCart.includes(product.id) ? (
-              <span>In Cart</span>
-            ) : (
-              <button onClick={() => handleAddToCart(product)}>Add to Cart</button>
-            )}
-          </div>
-        ))
-      ) : (
-        <p>No products available.</p>
-      )}
+      <div className="pl-product-grid">
+        {filteredProducts.length > 0 ? (
+          filteredProducts.map((product) => (
+            <div key={product.id} className="pl-product-card">
+              <h3 className="pl-product-name">{product.name}</h3>
+              {product.imageUrl && (
+                <img 
+                  src={product.imageUrl} 
+                  alt={product.name} 
+                  className="pl-product-image"
+                />
+              )}
+              <p className="pl-product-description">{product.description}</p>
+              <p className="pl-product-price">${product.price}</p>
+              {inCart.includes(product.id) ? (
+                <span className="in-cart">In Cart</span>
+              ) : (
+                <button className="pl-add-to-cart-button" onClick={() => handleAddToCart(product)}>
+                  Add to Cart
+                </button>
+              )}
+            </div>
+          ))
+        ) : (
+          <p className="pl-no-products">No products available.</p>
+        )}
+      </div>
+    </div>
     </div>
   );
 };

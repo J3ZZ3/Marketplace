@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import { jsPDF } from 'jspdf';
 import Navbar from './Navbar';
+import './styles/Payment.css';
 
 const Payment = () => {
   const location = useLocation();
@@ -79,33 +80,35 @@ const Payment = () => {
   };
 
   return (
-    <div>
+    <div className="p-payment-container">
       <Navbar />
-      <h2>Payment Page</h2>
-      <h3>Total Amount to Pay: ${totalAmount}</h3>
-      <h4>Items:</h4>
+      <h2 className="p-payment-title">Payment Page</h2>
+      <h3 className="p-total-amount">Total Amount to Pay: ${totalAmount}</h3>
+
+      <h4 className="p-items-header">Items:</h4>
       {productDetails.length > 0 ? (
-        <ul>
+        <ul className="p-product-list">
           {productDetails.map(product => (
-            <li key={product.id}>
-              <h5>{product.name}</h5>
-              <p>${product.price}</p>
+            <li key={product.id} className="p-product-item">
+              <h5 className="p-product-name">{product.name}</h5>
+              <p className="p-product-price">${product.price}</p>
               {product.imageUrl && (
                 <img 
                   src={product.imageUrl} 
                   alt={product.name} 
-                  style={{ width: '100px', height: 'auto' }} 
+                  className="p-product-image"
                 />
               )}
             </li>
           ))}
         </ul>
       ) : (
-        <p>No items to display.</p>
+        <p className="p-no-items">No items to display.</p>
       )}
-      <div id="paypal-button-container"></div>
+      <div id="paypal-button-container" className="paypal-button-container"></div>
     </div>
   );
 };
 
 export default Payment;
+

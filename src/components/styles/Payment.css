@@ -1,0 +1,107 @@
+.p-payment-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    font-family: Arial, sans-serif;
+  }
+  
+  .p-payment-title {
+    font-size: 2rem;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+  
+  .p-total-amount {
+    font-size: 1.5rem;
+    color: #27ae60;
+    margin-bottom: 1rem;
+  }
+  
+  .p-items-header {
+    font-size: 1.3rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+  }
+  
+  .p-product-list {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .p-product-item {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    transition: transform 0.2s;
+  }
+  
+  .p-product-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .p-product-image {
+    width: 80px;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .p-product-name {
+    font-size: 1.2rem;
+    color: #222;
+    font-weight: 600;
+  }
+  
+  .p-product-price {
+    font-size: 1.1rem;
+    color: #27ae60;
+  }
+  
+  .p-no-items {
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 1rem;
+  }
+  
+  .p-paypal-button-container {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  @media (max-width: 768px) {
+    .p-payment-title {
+      font-size: 1.8rem;
+    }
+  
+    .p-total-amount {
+      font-size: 1.3rem;
+    }
+  
+    .p-product-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .p-product-image {
+      width: 100%;
+      height: auto;
+    }
+  
+    .p-product-list {
+      width: 100%;
+    }
+  }
+  
+  

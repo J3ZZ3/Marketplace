@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
+import './styles/Register.css';
 
 function Register() {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -21,29 +23,43 @@ function Register() {
     }
   };
 
-  return (
-    <div>
-      <h2>Register</h2>
+  return (<div className='app'>
+    <div className="register-container">
       <form onSubmit={handleRegister}>
+        <h2>Register</h2>
+      <input
+          type="name"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
         <input
           type="email"
+          className="register-input"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <input
           type="password"
+          className="register-input"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          required
         />
-        <button type="submit">Sign Up</button>
-        {error && <p>{error}</p>}
+        <button type="submit" className="register-button">Sign Up</button>
+        {error && <p className="register-error">{error}</p>}
       </form>
-      <p>Already have an account? 
-      <Link to="/login"> Sign in</Link>
+      <p>
+        Already have an account? 
+        <Link to="/login" className="register-link"> Sign in</Link>
       </p>
     </div>
+    
+    </div>
+
   );
 }
 
