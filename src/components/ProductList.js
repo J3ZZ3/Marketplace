@@ -48,12 +48,12 @@ const ProductList = () => {
   }
 
   return (
-    <div>
+    <div className='product'>
       <Navbar />
 
       <h2>Pillock Marketplace</h2>
 
-      {/* Search Input */}
+
       <input
         type="text"
         placeholder="Search for a product..."

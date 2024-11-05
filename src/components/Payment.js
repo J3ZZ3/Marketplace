@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';  
 import { useLocation, useNavigate } from 'react-router-dom'; 
-import { jsPDF } from 'jspdf'; // Import jsPDF
+import { jsPDF } from 'jspdf';
 import Navbar from './Navbar';
 
 const Payment = () => {
@@ -10,7 +10,6 @@ const Payment = () => {
   const totalAmount = location.state?.totalAmount || 0; 
 
   useEffect(() => {
-    // Load PayPal SDK script
     const script = document.createElement('script');
     script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.REACT_APP_PAYPAL_CLIENT_ID}`;
     script.async = true;
@@ -30,7 +29,6 @@ const Payment = () => {
           const details = await actions.order.capture();
           alert('Transaction completed by ' + details.payer.name.given_name);
 
-          // Prepare purchase data for PDF
           const purchaseData = {
             products: productDetails,
             totalAmount: totalAmount,
@@ -42,15 +40,13 @@ const Payment = () => {
             createdAt: new Date().toISOString(),
           };
 
-          // Generate PDF
           generatePDF(purchaseData);
 
-          // Redirect to the dashboard after successful payment
           navigate('/dashboard');
         },
         onError: (err) => {
           console.error('PayPal error:', err);
-          alert('There was an error with the payment. Please try again.'); // User feedback
+          alert('There was an error with the payment. Please try again.');
         },
       }).render('#paypal-button-container');
     };
@@ -79,7 +75,7 @@ const Payment = () => {
     });
 
     doc.text(`Date: ${purchaseData.createdAt}`, 10, yPosition);
-    doc.save("payment_receipt.pdf"); // Save the PDF
+    doc.save("payment_receipt.pdf");
   };
 
   return (
