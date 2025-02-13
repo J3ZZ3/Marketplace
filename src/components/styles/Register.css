@@ -1,80 +1,249 @@
-
-.app {
+.op {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-image: url('../bg/Temu_.jfif');
-  }
-  
-  .register-container {
-    width: 100%;
-    max-width: 320px;
-    padding: 20px;
-    background-color: #ffffff36;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .register-container form {
+    min-height: 100vh;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../bg/signup.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+.register-container {
+    position: relative;
+    width: 90%;
+    max-width: 380px;
+    padding: 25px;
+    background-color: rgba(255, 255, 255, 0.37);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin: 20px;
+}
+
+.register-container form {
     display: flex;
     flex-direction: column;
-  }
-  
-  .register-container input {
+    width: 100%;
+}
+
+.register-container input {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
-    font-size: 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+    font-size: 16px;
+    border: 2px solid #eef1f6;
+    border-radius: 8px;
     box-sizing: border-box;
     background-color: #f8f9fa;
     outline: none;
-  }
-  
-  .register-container input:focus {
-    border-color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.register-container input:focus {
+    border-color: #4a90e2;
     background-color: #ffffff;
-  }
-  
-  .register-button {
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.register-button {
     width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background-color: #007bff;
+    padding: 14px;
+    margin-top: 16px;
+    background-color: #4a90e2;
     color: #ffffff;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .register-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .register-error {
-    margin-top: 10px;
-    color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+.register-button:hover {
+    background-color: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+
+.register-error {
+    margin-top: 12px;
+    color: #e74c3c;
     font-size: 0.9rem;
     text-align: center;
-  }
-  
-  .register-link {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: #007bff;
+    background-color: rgba(231, 76, 60, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.register-link {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #4a90e2;
     text-align: center;
     text-decoration: none;
-  }
-  
-  .register-link:hover {
-    text-decoration: underline;
-  }
+    transition: color 0.3s ease;
+}
+
+.register-link:hover {
+    color: #357abd;
+    text-decoration: none;
+}
+
+.happy-gif {
+    position: absolute;
+    width: 100px;
+    height: auto;
+    top: -80px;
+    left: 0%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.shopping-cat {
+    position: absolute;
+    width: 120px;
+    height: auto;
+    bottom: -90px;
+    right: -60px;
+    z-index: 2;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 480px) {
+    .register-container {
+        padding: 20px;
+        margin: 15px;
+        width: 95%;
+    }
+
+    .register-container h2 {
+        font-size: 24px !important;
+        margin-bottom: 20px !important;
+    }
+
+    .register-container input {
+        padding: 10px;
+        margin: 6px 0;
+    }
+
+    .register-button {
+        padding: 12px;
+        margin-top: 12px;
+    }
+
+    .happy-gif {
+        width: 80px;
+        top: -60px;
+    }
+
+    .shopping-cat {
+        width: 90px;
+        bottom: -70px;
+        right: -45px;
+    }
+}
+
+/* Small phones */
+@media screen and (max-width: 360px) {
+    .register-container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .register-container h2 {
+        font-size: 22px !important;
+    }
+
+    .happy-gif {
+        width: 70px;
+        top: -50px;
+    }
+
+    .shopping-cat {
+        width: 80px;
+        bottom: -60px;
+        right: -40px;
+    }
+}
+
+/* Handle landscape orientation */
+@media screen and (max-height: 600px) {
+    .op {
+        padding: 60px 0;
+    }
+
+    .happy-gif {
+        top: -40px;
+    }
+
+    .shopping-cat {
+        bottom: -40px;
+    }
+}
+
+/* Fix for iPhone 5/SE and similar small devices */
+@media screen and (max-width: 320px) {
+    .register-container {
+        padding: 12px;
+        margin: 8px;
+    }
+
+    .register-container input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .register-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .happy-gif, .shopping-cat {
+        width: 60px;
+    }
+}
+
+/* Ensure touch targets are large enough */
+@media (hover: none) and (pointer: coarse) {
+    .register-button, 
+    .register-container input,
+    .register-link {
+        min-height: 44px;
+    }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+    .register-container input {
+        font-size: 16px;
+    }
+}
+
+/* Additional register-specific responsive styles */
+@media screen and (max-height: 700px) {
+    .register-container {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    .register-container input {
+        margin: 4px 0;
+    }
+}
+
+/* Optimize form layout for mobile */
+@media screen and (max-width: 768px) {
+    .register-container form {
+        gap: 8px;
+    }
+
+    .register-button {
+        margin-top: 12px;
+    }
+}
   

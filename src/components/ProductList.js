@@ -79,7 +79,6 @@ const ProductList = () => {
                   className="pl-product-image"
                 />
               )}
-              <p className="pl-product-description">{product.description}</p>
               <p className="pl-product-price">${product.price}</p>
               {inCart.includes(product.id) ? (
                 <span className="in-cart">In Cart</span>

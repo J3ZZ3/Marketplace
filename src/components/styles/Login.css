@@ -1,80 +1,254 @@
-
 .op {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    background-image: url('../bg/download.jfif');
-  }
-  
-  .login-container {
-    width: 100%;
-    max-width: 320px;
-    padding: 20px;
-    background-color: #ffffff36;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .login-container form {
+    min-height: 100vh;
+    background-size: cover !important;
+    background-position: center !important;
+    background-attachment: fixed !important;
+    background-repeat: no-repeat !important;
+    transition: background-image 0.3s ease;
+}
+
+.login-container {
+    position: relative;
+    width: 90%;
+    max-width: 380px;
+    padding: clamp(15px, 5vw, 25px);
+    background-color: rgba(255, 255, 255, 0.37);
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    margin: clamp(10px, 3vw, 20px);
+}
+
+.login-container form {
     display: flex;
     flex-direction: column;
-  }
-  
-  .login-container input {
+    width: 100%;
+}
+
+.login-container input {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
-    font-size: 1rem;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+    font-size: 16px;
+    border: 2px solid #eef1f6;
+    border-radius: 8px;
     box-sizing: border-box;
     background-color: #f8f9fa;
     outline: none;
-  }
-  
-  .login-container input:focus {
-    border-color: #007bff;
+    transition: all 0.3s ease;
+}
+
+.login-container input:focus {
+    border-color: #4a90e2;
     background-color: #ffffff;
-  }
-  
-  .login-button {
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.login-button {
     width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    background-color: #007bff;
+    padding: 14px;
+    margin-top: 16px;
+    background-color: #4a90e2;
     color: #ffffff;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .login-error {
-    margin-top: 10px;
-    color: #dc3545;
+    transition: all 0.3s ease;
+}
+
+.login-button:hover {
+    background-color: #357abd;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
+}
+
+.login-error {
+    margin-top: 12px;
+    color: #e74c3c;
     font-size: 0.9rem;
     text-align: center;
-  }
-  
-  .login-link {
-    margin-top: 15px;
-    font-size: 0.9rem;
-    color: #007bff;
+    background-color: rgba(231, 76, 60, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.login-link {
+    margin-top: 20px;
+    font-size: 0.95rem;
+    color: #4a90e2;
     text-align: center;
     text-decoration: none;
-  }
-  
-  .login-link:hover {
-    text-decoration: underline;
-  }
-  
+    transition: color 0.3s ease;
+}
+
+.login-link:hover {
+    color: #357abd;
+    text-decoration: none;
+}
+
+.happy-gif {
+    position: absolute;
+    width: 100px;
+    height: auto;
+    top: -80px;
+    left: 0%;
+    transform: translateX(-50%);
+    z-index: 2;
+}
+
+.shopping-cat {
+    position: absolute;
+    width: 120px;
+    height: auto;
+    bottom: -90px;
+    right: -60px;
+    z-index: 2;
+}
+
+/* Improved mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .op {
+        background-attachment: scroll !important; /* Better mobile performance */
+        padding: 20px;
+    }
+
+    .login-container {
+        width: 95%;
+        max-width: 340px;
+    }
+
+    .happy-gif {
+        width: clamp(60px, 15vw, 80px);
+        top: -50px;
+        left: 10px;
+    }
+
+    .shopping-cat {
+        width: clamp(70px, 18vw, 90px);
+        bottom: -60px;
+        right: -30px;
+    }
+
+    input {
+        font-size: max(16px, 1em) !important; /* Prevent zoom on iOS */
+    }
+}
+
+/* Handle notched phones */
+@supports (padding: max(0px)) {
+    .op {
+        padding-left: max(20px, env(safe-area-inset-left));
+        padding-right: max(20px, env(safe-area-inset-right));
+        padding-bottom: max(20px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Prevent content shift during image load */
+.login-container {
+    min-height: 300px;
+}
+
+/* Optimize for foldable devices */
+@media (hover: none) and (pointer: coarse) and (max-width: 280px) {
+    .login-container {
+        padding: 10px;
+        margin: 5px;
+    }
+
+    .happy-gif, .shopping-cat {
+        display: none; /* Hide decorative elements on very small screens */
+    }
+}
+
+/* Improve touch targets */
+.login-button, 
+.login-container input,
+.login-link {
+    min-height: 44px;
+    touch-action: manipulation;
+}
+
+/* Small phones */
+@media screen and (max-width: 360px) {
+    .login-container {
+        padding: 15px;
+        margin: 10px;
+    }
+
+    .login-container h2 {
+        font-size: 22px !important;
+    }
+
+    .happy-gif {
+        width: 70px;
+        top: -50px;
+    }
+
+    .shopping-cat {
+        width: 80px;
+        bottom: -60px;
+        right: -40px;
+    }
+}
+
+/* Handle landscape orientation */
+@media screen and (max-height: 600px) {
+    .op {
+        padding: 60px 0;
+    }
+
+    .happy-gif {
+        top: -40px;
+    }
+
+    .shopping-cat {
+        bottom: -40px;
+    }
+}
+
+/* Fix for iPhone 5/SE and similar small devices */
+@media screen and (max-width: 320px) {
+    .login-container {
+        padding: 12px;
+        margin: 8px;
+    }
+
+    .login-container input {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    .login-button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .happy-gif, .shopping-cat {
+        width: 60px;
+    }
+}
+
+/* Ensure touch targets are large enough */
+@media (hover: none) and (pointer: coarse) {
+    .login-button, 
+    .login-container input,
+    .login-link {
+        min-height: 44px; /* Apple's recommended minimum touch target size */
+    }
+}
+
+/* Prevent zoom on input focus for iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 0) { 
+    .login-container input {
+        font-size: 16px;
+    }
+}
+
