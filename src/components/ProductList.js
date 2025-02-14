@@ -6,6 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import Swal from 'sweetalert2';
 import './styles/ProductList.css';
 import Navbar from './Navbar';
+import ProductCard from './ProductCard';
 
 const ProductList = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,11 @@ const ProductList = () => {
         dispatch(setProducts(productList));
       } catch (error) {
         console.error("Error fetching products: ", error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Failed to load products. Please try again.',
+        });
       } finally {
         Swal.close();
       }
@@ -56,44 +62,32 @@ const ProductList = () => {
   return (
     <div>
       <Navbar />
-    <div className="pl-product-list">
-      <h2 className="pl-product-list-title">Pillock Marketplace</h2>
-      
-      <input
-        type="text"
-        className="pl-search-bar"
-        placeholder="Search for a product..."
-        value={searchQuery}
-        onChange={handleSearch}
-      />
+      <div className="product-list">
+        <h2 className="product-list-title">Pillock Marketplace</h2>
+        
+        <input
+          type="text"
+          className="search-bar"
+          placeholder="Search for a product..."
+          value={searchQuery}
+          onChange={handleSearch}
+        />
 
-      <div className="pl-product-grid">
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product) => (
-            <div key={product.id} className="pl-product-card">
-              <h3 className="pl-product-name">{product.name}</h3>
-              {product.imageUrl && (
-                <img 
-                  src={product.imageUrl} 
-                  alt={product.name} 
-                  className="pl-product-image"
-                />
-              )}
-              <p className="pl-product-price">${product.price}</p>
-              {inCart.includes(product.id) ? (
-                <span className="in-cart">In Cart</span>
-              ) : (
-                <button className="pl-add-to-cart-button" onClick={() => handleAddToCart(product)}>
-                  Add to Cart
-                </button>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="pl-no-products">No products available.</p>
-        )}
+        <div className="product-grid">
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={handleAddToCart}
+                isInCart={inCart.includes(product.id)}
+              />
+            ))
+          ) : (
+            <p className="no-products">No products available.</p>
+          )}
+        </div>
       </div>
-    </div>
     </div>
   );
 };
