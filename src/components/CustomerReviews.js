@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import './styles/CustomerReviews.css';
 
-const CustomerReviews = ({ reviews = [] }) => {
+const CustomerReviews = ({ reviews = [], productId }) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
   const [newReview, setNewReview] = useState({
     rating: 5,
@@ -10,18 +10,57 @@ const CustomerReviews = ({ reviews = [] }) => {
     name: ''
   });
 
-  const handleReviewSubmit = (e) => {
+  const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    // Add logic to submit review to your backend
-    Swal.fire({
-      icon: 'success',
-      title: 'Thank you for your review!',
-      text: 'Your review has been submitted successfully.',
-      timer: 2000,
-      showConfirmButton: false
-    });
-    setShowReviewForm(false);
-    setNewReview({ rating: 5, comment: '', name: '' });
+    
+    try {
+      // Get the auth token
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Authentication Required',
+          text: 'Please log in to submit a review',
+        });
+        return;
+      }
+
+      const response = await fetch(`/api/products/${productId}/reviews`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          rating: newReview.rating,
+          comment: newReview.comment
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit review');
+      }
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Thank you for your review!',
+        text: 'Your review has been submitted successfully.',
+        timer: 2000,
+        showConfirmButton: false
+      });
+
+      setShowReviewForm(false);
+      setNewReview({ rating: 5, comment: '', name: '' });
+      
+      // Trigger a refresh of the product details to show the new review
+      window.location.reload();
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Failed to submit review. Please try again.',
+      });
+    }
   };
 
   const renderStars = (rating) => {

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../redux/actions";
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar';
-
+import './styles/Cart.css';
 
 const Cart = () => {
   const products = useSelector((state) => state.cart.items);
@@ -20,12 +20,7 @@ const Cart = () => {
       imageUrl: product.imageUrl,
     }));
 
-    navigate("/payment", {
-      state: {
-        productDetails,
-        totalAmount,
-      },
-    });
+    navigate("/payment", { state: { productDetails, totalAmount } });
   };
 
   const handleRemoveFromCart = (productId) => {
@@ -33,31 +28,73 @@ const Cart = () => {
   };
 
   return (
-    <div>
+    <div className="cart-page">
       <Navbar />
-      <h2>Shopping Cart</h2>
-      {products.length === 0 ? (
-        <p>Your cart is empty</p>
-      ) : (
-        products.map((product) => (
-          <div key={product.id}>
-            <h3>{product.name}</h3>
-            {product.imageUrl && (
-              <img
-                src={product.imageUrl}
-                alt={product.name}
-                style={{ width: "250px", height: "auto" }}
-              />
+      <div className="cart-container">
+        <div className="cart-header">
+          <h2>Shopping Cart</h2>
+          <span className="item-count">{products.length} items</span>
+        </div>
+        
+        <div className="cart-content">
+          <div className="cart-items">
+            {products.length === 0 ? (
+              <div className="empty-cart">
+                <i className="fas fa-shopping-cart"></i>
+                <p>Your cart is empty</p>
+                <button onClick={() => navigate('/')} className="continue-shopping">
+                  Continue Shopping
+                </button>
+              </div>
+            ) : (
+              products.map((product) => (
+                <div key={product.id} className="cart-item">
+                  <div className="item-image">
+                    {product.imageUrl && (
+                      <img src={product.imageUrl} alt={product.name} />
+                    )}
+                  </div>
+                  <div className="item-details">
+                    <h3>{product.name}</h3>
+                    <button 
+                      onClick={() => handleRemoveFromCart(product.id)}
+                      className="remove-button"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                  <div className="item-price">
+                    <span className="price">${product.price.toFixed(2)}</span>
+                  </div>
+                </div>
+              ))
             )}
-            <p>R{product.price}</p>
-            <button onClick={() => handleRemoveFromCart(product.id)}>
-              Remove
-            </button>{" "}
-            {}
           </div>
-        ))
-      )}
-      {products.length > 0 && <button onClick={handlePayNow}>Pay Now</button>}
+
+          {products.length > 0 && (
+            <div className="cart-summary">
+              <h3>Order Summary</h3>
+              <div className="summary-details">
+                <div className="summary-row">
+                  <span>Subtotal</span>
+                  <span>${totalAmount.toFixed(2)}</span>
+                </div>
+                <div className="summary-row">
+                  <span>Shipping</span>
+                  <span>Free</span>
+                </div>
+                <div className="summary-total">
+                  <span>Total</span>
+                  <span>${totalAmount.toFixed(2)}</span>
+                </div>
+                <button onClick={handlePayNow} className="checkout-button">
+                  Proceed to Checkout
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

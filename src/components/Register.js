@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { loginUser } from '../redux/actions';
 import './styles/Register.css';
 import happyGif from './bg/topgif.gif';
 import catGif from './bg/bottomgif.gif';
@@ -13,6 +15,7 @@ function Register() {
   const [password, setPassword] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const loadBackgroundImage = async () => {
@@ -52,23 +55,30 @@ function Register() {
 
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      console.log('Registered:', userCredential.user);
-      
-      // Show success message
+      const user = userCredential.user;
+
+      // Dispatch login action with user data
+      dispatch(loginUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      }));
+
       await Swal.fire({
         icon: 'success',
         title: 'Welcome!',
-        text: 'Account created successfully',
+        text: 'Registration successful',
         timer: 1500,
         showConfirmButton: false
       });
-      
-      navigate('/login');
+
+      navigate('/products');
     } catch (error) {
-      // Show error message
+      console.error('Registration error:', error);
       Swal.fire({
         icon: 'error',
-        title: 'Registration Failed',
+        title: 'Oops...',
         text: error.message,
         confirmButtonColor: '#4a90e2'
       });

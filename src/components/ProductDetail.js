@@ -119,6 +119,7 @@ const ProductDetail = () => {
 
             <div className="product-description-section">
               <h2>Product Description</h2>
+              <br></br>
               <div className={`description-content ${showFullDescription ? 'expanded' : ''}`}>
                 <p>{product.description}</p>
               </div>
@@ -129,20 +130,6 @@ const ProductDetail = () => {
                 {showFullDescription ? 'Show Less' : 'Show More'}
               </button>
             </div>
-
-            {product.specifications && (
-              <div className="product-specifications">
-                <h2>Specifications</h2>
-                <ul>
-                  {Object.entries(product.specifications).map(([key, value]) => (
-                    <li key={key}>
-                      <span className="spec-label">{key}:</span>
-                      <span className="spec-value">{value}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
         </div>
 
@@ -162,7 +149,7 @@ const ProductDetail = () => {
           }}
         />
 
-        <CustomerReviews reviews={product.reviews} />
+        <CustomerReviews reviews={product.reviews} productId={product.id} />
       </div>
     </div>
   );

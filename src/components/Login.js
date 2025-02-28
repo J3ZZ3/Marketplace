@@ -6,6 +6,8 @@ import './styles/Login.css'
 import happyGif from './bg/topgif.gif';
 import catGif from './bg/bottomgif.gif';
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser } from '../redux/actions';
 
 
 function Login() {
@@ -13,6 +15,8 @@ function Login() {
   const [password, setPassword] = useState('');
   const [backgroundImage, setBackgroundImage] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
 
   useEffect(() => {
     // Lazy load the background image
@@ -28,6 +32,13 @@ function Login() {
     loadBackgroundImage();
   }, []);
 
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate('/products');
+    }
+  }, [user, navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -41,8 +52,16 @@ function Login() {
 
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('Logged in:', userCredential.user);
+      const user = userCredential.user;
       
+      // Dispatch login action with user data
+      dispatch(loginUser({
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+      }));
+
       // Show success message
       await Swal.fire({
         icon: 'success',
@@ -54,7 +73,7 @@ function Login() {
       
       navigate('/products');
     } catch (error) {
-      // Show error message
+      console.error('Login error:', error);
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
@@ -66,7 +85,7 @@ function Login() {
 
   return (
     <div className='op' style={{ 
-      background: backgroundImage 
+      backgroundImage: backgroundImage 
         ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${backgroundImage})`
         : 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))',
       backgroundSize: 'cover',

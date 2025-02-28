@@ -1,0 +1,182 @@
+.promotional-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin: 2rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+.promo-card {
+  text-align: center;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Gradient background effect */
+.promo-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(76, 175, 80, 0.1));
+  z-index: -1;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+.promo-card:hover::before {
+  opacity: 1;
+}
+
+/* Icon styling */
+.promo-icon {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  display: inline-block;
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+/* Text styling */
+.promo-card h3 {
+  color: #2c3e50;
+  margin-bottom: 0.75rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.promo-card p {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+/* Hover effects */
+.promo-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Shimmer effect */
+.promo-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: transform 0.5s ease;
+  opacity: 0;
+}
+
+.promo-card:hover::after {
+  transform: rotate(30deg) translate(50%, 50%);
+  opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .promotional-features {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding: 1.5rem 0;
+  }
+
+  .promo-card {
+    padding: 1.5rem;
+  }
+
+  .promo-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .promo-card h3 {
+    font-size: 1.25rem;
+  }
+
+  .promo-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Animation classes for Framer Motion */
+.promo-card-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.promo-card-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.promo-card-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.promo-card-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Pulse animation for icons */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.promo-icon {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+/* Stagger delay for cards */
+.promotional-features > * {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.promotional-features > *:nth-child(1) { animation-delay: 0.1s; }
+.promotional-features > *:nth-child(2) { animation-delay: 0.2s; }
+.promotional-features > *:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

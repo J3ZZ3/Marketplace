@@ -14,6 +14,7 @@ const RelatedProducts = ({ products, onAddToCart }) => {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
+    arrows: false,
     responsive: [
       {
         breakpoint: 1200,
@@ -39,13 +40,17 @@ const RelatedProducts = ({ products, onAddToCart }) => {
     ]
   };
 
+  const handleProductClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="you-might-like-section">
       <h2 className="section-title">You Might Like</h2>
       <div className="carousel-container">
         <Slider {...settings}>
           {products.map(product => (
-            <div className="carousel-slide" key={product.id}>
+            <div className="carousel-slide" key={product.id} onClick={handleProductClick}>
               <div className="related-product-card-wrapper">
                 <ProductCard
                   product={product}

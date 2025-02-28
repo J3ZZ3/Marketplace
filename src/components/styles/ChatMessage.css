@@ -1,0 +1,119 @@
+.message-wrapper {
+  display: flex;
+  margin-bottom: 0.5rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.message-wrapper.own-message {
+  justify-content: flex-end;
+}
+
+.message {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 65%;
+}
+
+.own-message .message {
+  flex-direction: row-reverse;
+}
+
+.message-user {
+  display: flex;
+  align-items: flex-start;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.default-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ffd700;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.message-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.message-username {
+  font-size: 0.75rem;
+  color: #ffd700;
+  margin-bottom: 0.2rem;
+  font-weight: 500;
+}
+
+.message-bubble {
+  background: #333333;
+  padding: 0.6rem 1rem;
+  border-radius: 7.5px;
+  position: relative;
+  box-shadow: 0 1px 0.5px rgba(0,0,0,.2);
+  color: #ffffff;
+}
+
+.own-message .message-bubble {
+  background: #ffd700;
+  color: #1a1a1a;
+}
+
+.message-bubble::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 12px;
+  height: 12px;
+}
+
+.message-bubble:not(.own-message .message-bubble)::before {
+  left: -6px;
+  background: linear-gradient(225deg, #333333 0%, #333333 50%, transparent 50%, transparent);
+}
+
+.own-message .message-bubble::before {
+  right: -6px;
+  background: linear-gradient(135deg, #ffd700 0%, #ffd700 50%, transparent 50%, transparent);
+}
+
+.message-bubble p {
+  margin: 0;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  padding-right: 4rem;
+  word-wrap: break-word;
+}
+
+.message-time {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  bottom: 4px;
+  right: 7px;
+}
+
+.own-message .message-time {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 

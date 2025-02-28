@@ -1,13 +1,20 @@
 .product-information-section {
   margin-top: 4rem;
   padding-top: 2rem;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--medium-grey);
+}
+
+.section-title {
+  color: #FFD700;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
 }
 
 .product-information-content {
-  background: #fff;
+  background: var(--dark-grey);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 

@@ -12,21 +12,23 @@ const ProductInformation = ({ product }) => {
             <div className="specifications-grid">
               <div className="spec-item">
                 <span className="spec-label">Brand</span>
-                <span className="spec-value">{product.brand}</span>
+                <span className="spec-value">{product.brand || 'N/A'}</span>
               </div>
               <div className="spec-item">
                 <span className="spec-label">Model</span>
-                <span className="spec-value">{product.model}</span>
+                <span className="spec-value">{product.model || 'N/A'}</span>
               </div>
               <div className="spec-item">
                 <span className="spec-label">SKU</span>
-                <span className="spec-value">{product.sku}</span>
+                <span className="spec-value">{product.sku || 'N/A'}</span>
               </div>
-              {product.specifications && Object.entries(product.specifications).map(([key, value]) => (
-                <div key={key} className="spec-item">
-                  <span className="spec-label">{key}</span>
-                  <span className="spec-value">{value}</span>
-                </div>
+              {product.specifications && Object.entries(product.specifications)
+                .filter(([key]) => !['Brand', 'Model', 'SKU'].includes(key))
+                .map(([key, value]) => (
+                  <div key={key} className="spec-item">
+                    <span className="spec-label">{key}</span>
+                    <span className="spec-value">{value}</span>
+                  </div>
               ))}
             </div>
           </div>
@@ -40,6 +42,9 @@ const ProductInformation = ({ product }) => {
                   <span>{feature}</span>
                 </li>
               ))}
+              {(!product.features || product.features.length === 0) && (
+                <li className="no-features">No features listed</li>
+              )}
             </ul>
           </div>
 
