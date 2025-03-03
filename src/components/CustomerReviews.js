@@ -2,17 +2,30 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import './styles/CustomerReviews.css';
 
-const CustomerReviews = ({ reviews = [] }) => {
+const CustomerReviews = ({ reviews = [], onSubmitReview }) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
+  const [sortBy, setSortBy] = useState('newest');
   const [newReview, setNewReview] = useState({
     rating: 5,
     comment: '',
-    name: ''
+    name: '',
+    title: ''
   });
+
+  const averageRating = reviews.length 
+    ? (reviews.reduce((acc, rev) => acc + rev.rating, 0) / reviews.length).toFixed(1)
+    : 0;
 
   const handleReviewSubmit = (e) => {
     e.preventDefault();
-    // Add logic to submit review to your backend
+    const reviewData = {
+      ...newReview,
+      date: new Date().toISOString(),
+      helpfulVotes: 0,
+      id: Date.now().toString()
+    };
+    onSubmitReview(reviewData);
+    
     Swal.fire({
       icon: 'success',
       title: 'Thank you for your review!',
@@ -21,7 +34,22 @@ const CustomerReviews = ({ reviews = [] }) => {
       showConfirmButton: false
     });
     setShowReviewForm(false);
-    setNewReview({ rating: 5, comment: '', name: '' });
+    setNewReview({ rating: 5, comment: '', name: '', title: '' });
+  };
+
+  const getSortedReviews = () => {
+    const sortedReviews = [...reviews];
+    switch (sortBy) {
+      case 'helpful':
+        return sortedReviews.sort((a, b) => b.helpfulVotes - a.helpfulVotes);
+      case 'highest':
+        return sortedReviews.sort((a, b) => b.rating - a.rating);
+      case 'lowest':
+        return sortedReviews.sort((a, b) => a.rating - b.rating);
+      case 'newest':
+      default:
+        return sortedReviews.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
   };
 
   const renderStars = (rating) => {
@@ -45,12 +73,11 @@ const CustomerReviews = ({ reviews = [] }) => {
         </button>
       </div>
 
-      {/* Review Summary */}
       <div className="review-summary">
         <div className="average-rating">
-          <div className="rating-number">4.5</div>
+          <div className="rating-number">{averageRating}</div>
           <div className="rating-stars">
-            {renderStars(4.5)}
+            {renderStars(parseFloat(averageRating))}
           </div>
           <div className="total-reviews">
             Based on {reviews.length} reviews
@@ -77,7 +104,19 @@ const CustomerReviews = ({ reviews = [] }) => {
         </div>
       </div>
 
-      {/* Review Form Modal */}
+      <div className="reviews-controls">
+        <select 
+          value={sortBy} 
+          onChange={(e) => setSortBy(e.target.value)}
+          className="sort-select"
+        >
+          <option value="newest">Newest First</option>
+          <option value="helpful">Most Helpful</option>
+          <option value="highest">Highest Rated</option>
+          <option value="lowest">Lowest Rated</option>
+        </select>
+      </div>
+
       {showReviewForm && (
         <div className="review-form-modal">
           <div className="review-form-content">
@@ -96,6 +135,16 @@ const CustomerReviews = ({ reviews = [] }) => {
                   value={newReview.name}
                   onChange={(e) => setNewReview({...newReview, name: e.target.value})}
                   required
+                />
+              </div>
+              <div className="form-group">
+                <label>Review Title</label>
+                <input
+                  type="text"
+                  value={newReview.title}
+                  onChange={(e) => setNewReview({...newReview, title: e.target.value})}
+                  required
+                  placeholder="Summarize your review"
                 />
               </div>
               <div className="form-group">
@@ -126,9 +175,8 @@ const CustomerReviews = ({ reviews = [] }) => {
         </div>
       )}
 
-      {/* Reviews List */}
       <div className="reviews-list">
-        {reviews.map((review) => (
+        {getSortedReviews().map((review) => (
           <div key={review.id} className="review-item">
             <div className="review-header">
               <div className="reviewer-info">
@@ -143,10 +191,19 @@ const CustomerReviews = ({ reviews = [] }) => {
                 {renderStars(review.rating)}
               </div>
             </div>
+            <h4 className="review-title">{review.title}</h4>
             <div className="review-date">
               {new Date(review.date).toLocaleDateString()}
             </div>
             <p className="review-comment">{review.comment}</p>
+            <div className="review-footer">
+              <button 
+                className="helpful-button"
+                onClick={() => onSubmitReview({ ...review, helpfulVotes: (review.helpfulVotes || 0) + 1 })}
+              >
+                <i className="fas fa-thumbs-up"></i> Helpful ({review.helpfulVotes || 0})
+              </button>
+            </div>
           </div>
         ))}
       </div>

@@ -1,0 +1,373 @@
+.add-product-container {
+  min-height: 100vh;
+  background-color: #f4f4f4;
+  padding: 24px;
+}
+
+.add-product-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.left-section,
+.right-section {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.page-title {
+  color: #2d2d2d;
+  font-size: 24px;
+  margin-bottom: 24px;
+  grid-column: 1 / -1;
+}
+
+.form-section {
+  margin-bottom: 24px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 6px;
+  border: 1px solid #e9ecef;
+}
+
+.form-section h3 {
+  color: #0A6CA8;
+  font-size: 18px;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #0B79BF;
+}
+
+.input-group {
+  margin-bottom: 16px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #2d2d2d;
+  font-weight: 500;
+}
+
+.input-group input,
+.input-group textarea,
+.input-group select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.price-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.features-list,
+.specifications-list {
+  margin-top: 16px;
+  background: white;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.feature-item,
+.spec-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  background: #f8f9fa;
+  margin-bottom: 8px;
+  border-radius: 4px;
+}
+
+.remove-button {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.submit-button {
+  grid-column: 1 / -1;
+  background: #333333;
+  color: #ffffff;
+  border: none;
+  padding: 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-button:hover {
+  background: #FFD700;
+  color: #333333;
+}
+
+.image-preview {
+  width: 100%;
+  height: 200px;
+  border: 2px dashed #ced4da;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .add-product-form {
+    grid-template-columns: 1fr;
+  }
+
+  .price-group {
+    grid-template-columns: 1fr;
+  }
+}
+
+.image-upload-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.image-preview-container {
+  width: 100%;
+  min-height: 200px;
+  border: 2px dashed #ced4da;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.image-preview-container:hover {
+  border-color: #0B79BF;
+}
+
+.image-upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  padding: 20px;
+  text-align: center;
+  color: #6c757d;
+}
+
+.image-upload-placeholder i {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #0B79BF;
+}
+
+.image-upload-placeholder p {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.image-upload-placeholder span {
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.image-preview {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.remove-image {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.remove-image:hover {
+  background: #dc3545;
+}
+
+.image-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Add drag and drop visual feedback */
+.image-preview-container.drag-over {
+  border-color: #0B79BF;
+  background-color: rgba(11, 121, 191, 0.05);
+}
+
+/* Error state */
+.image-preview-container.error {
+  border-color: #dc3545;
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .image-preview-container {
+    min-height: 150px;
+  }
+  
+  .image-upload-placeholder {
+    height: 150px;
+  }
+  
+  .image-preview {
+    height: 150px;
+  }
+}
+
+.features-section {
+  margin-top: 16px;
+}
+
+.feature-input-group {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.feature-input-group input {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.add-feature-button {
+  background: #0B79BF;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.add-feature-button:hover {
+  background: #0A6CA8;
+}
+
+.add-feature-button i {
+  font-size: 16px;
+}
+
+.features-list {
+  margin-top: 16px;
+  background: white;
+  border-radius: 4px;
+  padding: 12px;
+  border: 1px solid #e9ecef;
+}
+
+.feature-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #f8f9fa;
+  margin-bottom: 8px;
+  border-radius: 4px;
+  border: 1px solid #e9ecef;
+}
+
+.feature-item:last-child {
+  margin-bottom: 0;
+}
+
+.feature-text {
+  font-size: 14px;
+  color: #2d2d2d;
+}
+
+.remove-feature-button {
+  background: transparent;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.remove-feature-button:hover {
+  background: #dc3545;
+  color: white;
+}

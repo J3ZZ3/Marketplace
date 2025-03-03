@@ -16,8 +16,22 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
+
+// Initialize Storage with CORS configuration
+const storage = getStorage(app);
+storage._customUrlOrRegion = {
+  customDomain: 'firebasestorage.googleapis.com',
+  corsOptions: {
+    origin: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+  }
+};
+
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+export { storage, db, auth };
 
 export default app;

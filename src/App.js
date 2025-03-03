@@ -4,6 +4,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import HomePage from "./components/LandingPage";
 import AddProduct from "./components/AddProduct";
+import ManageProducts from "./components/Dashboard";
 import ProductList from "./components/ProductList";
 import Dashboard from "./components/Dashboard";
 import Cart from "./components/Cart";
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/add-product" element={<AddProduct />} />
+        <Route path="/manage-products" element={<ManageProducts />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/cart" element={<Cart />} />

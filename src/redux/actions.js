@@ -1,4 +1,3 @@
-
 export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const REMOVE_PRODUCT = 'REMOVE_PRODUCT';
 export const LOGIN_USER = 'LOGIN_USER';
@@ -6,6 +5,7 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const SET_PRODUCTS = 'SET_PRODUCTS';
 export const ADD_TO_CART = 'ADD_TO_CART'; 
 export const REMOVE_FROM_CART = 'REMOVE_FROM_CART';
+export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 export const loginUser = (user) => ({
   type: LOGIN_USER,
@@ -39,4 +39,9 @@ export const addToCart = (product) => ({
 export const removeFromCart = (productId) => ({
   type: REMOVE_FROM_CART,
   payload: productId,
+});
+
+export const updateProduct = (product) => ({
+  type: UPDATE_PRODUCT,
+  payload: product
 });

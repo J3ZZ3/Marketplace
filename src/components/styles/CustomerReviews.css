@@ -12,8 +12,8 @@
 }
 
 .write-review-btn {
-  background: #0066cc;
-  color: white;
+  background: #333333;
+  color: #ffffff;
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 6px;
@@ -23,7 +23,8 @@
 }
 
 .write-review-btn:hover {
-  background: #0052a3;
+  background: #FFD700;
+  color: #333333;
 }
 
 /* Review Summary */
@@ -221,7 +222,7 @@
 
 /* Star colors */
 .filled {
-  color: #ffc107;
+  color: #FFD700;
 }
 
 .empty {

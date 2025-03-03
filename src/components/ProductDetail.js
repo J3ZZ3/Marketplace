@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../redux/actions';
+import { addToCart, updateProduct } from '../redux/actions';
 import Navbar from './Navbar';
 import CustomerReviews from './CustomerReviews';
 import ProductInformation from './ProductInformation';
@@ -50,6 +50,17 @@ const ProductDetail = () => {
       timer: 1500,
       showConfirmButton: false
     });
+  };
+
+  const handleSubmitReview = (reviewData) => {
+    // Here you would typically make an API call to save the review
+    const updatedProduct = {
+      ...product,
+      reviews: product.reviews ? [...product.reviews, reviewData] : [reviewData]
+    };
+    // Update your Redux store or state management with the new review
+    // This is a placeholder - implement according to your state management solution
+    dispatch(updateProduct(updatedProduct));
   };
 
   return (
@@ -162,7 +173,10 @@ const ProductDetail = () => {
           }}
         />
 
-        <CustomerReviews reviews={product.reviews} />
+        <CustomerReviews 
+          reviews={product.reviews} 
+          onSubmitReview={handleSubmitReview}
+        />
       </div>
     </div>
   );

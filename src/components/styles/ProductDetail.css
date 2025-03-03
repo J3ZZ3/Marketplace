@@ -16,14 +16,14 @@
 .back-button {
   background: none;
   border: none;
-  color: #0066cc;
+  color: #333333;
   font-size: 1rem;
   cursor: pointer;
   padding: 0.5rem 0;
 }
 
 .back-button:hover {
-  text-decoration: underline;
+  color: #FFD700;
 }
 
 .product-detail-content {
@@ -443,7 +443,7 @@
 }
 
 .rating-stars i {
-  color: #ffc107;
+  color: #FFD700;
   font-size: 1.2rem;
   margin: 0 2px;
 }
