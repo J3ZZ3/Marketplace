@@ -61,7 +61,8 @@ const ProductList = () => {
           return {
             id: doc.id,
             ...data,
-            createdAt: data.createdAt || new Date().toISOString()
+            createdAt: data.createdAt || new Date().toISOString(),
+            imageUrl: data.imageUrl
           };
         });
 

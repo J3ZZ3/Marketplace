@@ -1,13 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles/ProductInformation.css';
 
 const ProductInformation = ({ product }) => {
+  const [activeTab, setActiveTab] = useState('specifications');
+
   return (
     <div className="product-information-section">
       <h2 className="section-title">Product Information</h2>
       <div className="product-information-content">
+        <div className="tab-buttons">
+          <button 
+            className={`tab-button ${activeTab === 'specifications' ? 'active' : ''}`}
+            onClick={() => setActiveTab('specifications')}
+          >
+            Specifications
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'features' ? 'active' : ''}`}
+            onClick={() => setActiveTab('features')}
+          >
+            Features
+          </button>
+          <button 
+            className={`tab-button ${activeTab === 'shipping' ? 'active' : ''}`}
+            onClick={() => setActiveTab('shipping')}
+          >
+            Shipping
+          </button>
+        </div>
+
         <div className="info-tabs">
-          <div className="info-tab active">
+          <div className={`info-tab ${activeTab === 'specifications' ? 'active' : ''}`}>
             <h3>Specifications</h3>
             <div className="specifications-grid">
               <div className="spec-item">
@@ -33,7 +56,7 @@ const ProductInformation = ({ product }) => {
             </div>
           </div>
 
-          <div className="info-tab">
+          <div className={`info-tab ${activeTab === 'features' ? 'active' : ''}`}>
             <h3>Features</h3>
             <ul className="features-list">
               {product.features && product.features.map((feature, index) => (
@@ -48,7 +71,7 @@ const ProductInformation = ({ product }) => {
             </ul>
           </div>
 
-          <div className="info-tab">
+          <div className={`info-tab ${activeTab === 'shipping' ? 'active' : ''}`}>
             <h3>Shipping Information</h3>
             <div className="shipping-info">
               <div className="shipping-item">

@@ -16,6 +16,7 @@ import Payment from "./components/Payment";
 import ProductDetail from './components/ProductDetail';
 import Footer from './components/Footer';
 import ViewCategoryList from './components/ViewCategoryList';
+import EditProduct from './components/EditProduct';
 
 function App() {
   const dispatch = useDispatch();
@@ -52,6 +53,11 @@ function App() {
         <Route path="/add-product" element={
           <ProtectedRoute>
             <AddProduct />
+          </ProtectedRoute>
+        } />
+        <Route path="/edit-product/:id" element={
+          <ProtectedRoute>
+            <EditProduct />
           </ProtectedRoute>
         } />
         <Route path="/products" element={

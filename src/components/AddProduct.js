@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 import './styles/AddProduct.css';
 import { auth } from '../firebase'; // Make sure to import auth from firebase config
 import { serverTimestamp } from 'firebase/firestore';
+import { uploadImageToBase64 } from '../redux/actions/productActions'; // Import the function
 
 const AddProduct = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const AddProduct = () => {
     model: '',
     sku: '',
     stock: '',
-    specifications: {}
+    specifications: [],
+    features: []
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -57,12 +59,13 @@ const AddProduct = () => {
     }));
   };
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
+      const base64Image = await uploadImageToBase64(file); // Convert to Base64
       setImageFile(file);
-      const previewUrl = URL.createObjectURL(file);
-      setImagePreview(previewUrl);
+      setImagePreview(base64Image); // Set the preview to the Base64 string
+      setProductData(prev => ({ ...prev, imageUrl: base64Image })); // Set the imageUrl in product data
     }
   };
 
@@ -85,72 +88,61 @@ const AddProduct = () => {
     return downloadUrl;
   };
 
+  const handleFeatureChange = (index, value) => {
+    const newFeatures = [...productData.features];
+    newFeatures[index] = value;
+    setProductData(prev => ({
+      ...prev,
+      features: newFeatures
+    }));
+  };
+
+  const addFeature = () => {
+    setProductData(prev => ({
+      ...prev,
+      features: [...prev.features, '']
+    }));
+  };
+
+  const removeFeature = (index) => {
+    setProductData(prev => ({
+      ...prev,
+      features: prev.features.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleSpecificationChange = (index, key, value) => {
+    const newSpecifications = [...productData.specifications];
+    newSpecifications[index] = { ...newSpecifications[index], [key]: value };
+    setProductData(prev => ({
+      ...prev,
+      specifications: newSpecifications
+    }));
+  };
+
+  const addSpecification = () => {
+    setProductData(prev => ({
+      ...prev,
+      specifications: [...prev.specifications, { label: '', value: '' }]
+    }));
+  };
+
+  const removeSpecification = (index) => {
+    setProductData(prev => ({
+      ...prev,
+      specifications: prev.specifications.filter((_, i) => i !== index)
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    if (!user) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Authentication Required',
-        text: 'Please log in to add products'
-      });
-      navigate('/login');
-      return;
-    }
-
-    if (!productData.category) {
-      Swal.fire({
-        icon: 'warning',
-        title: 'Category Required',
-        text: 'Please select a category for your product.'
-      });
-      return;
-    }
-
+    setIsUploading(true);
     try {
-      setIsUploading(true);
-      let imageUrl = productData.imageUrl;
-
-      if (imageFile) {
-        imageUrl = await uploadImage(imageFile);
-      }
-
-      const newProduct = {
-        name: productData.name,
-        price: Number(productData.price),
-        description: productData.description,
-        category: productData.category,
-        imageUrl: imageUrl,
-        brand: productData.brand,
-        model: productData.model,
-        sku: productData.sku,
-        stock: Number(productData.stock),
-        userId: user.uid,
-        createdAt: new Date().toISOString(),
-        specifications: {
-          brand: productData.brand,
-          model: productData.model,
-          sku: productData.sku
-        }
-      };
-
-      await dispatch(addProduct(newProduct));
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Product Added Successfully!',
-        showConfirmButton: false,
-        timer: 1500
-      });
-
+      await dispatch(addProduct(productData)); // Add product with Base64 image
+      Swal.fire('Success', 'Product added successfully!', 'success');
       navigate('/products');
     } catch (error) {
-      console.error('Error adding product:', error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to add product. Please try again.'
-      });
+      Swal.fire('Error', 'Failed to add product', 'error');
     } finally {
       setIsUploading(false);
     }
@@ -278,6 +270,72 @@ const AddProduct = () => {
                       placeholder="Stock Quantity"
                       required
                     />
+                  </div>
+                </div>
+
+                <div className="form-section">
+                  <h3>Product Features</h3>
+                  <div className="features-list">
+                    {productData.features.map((feature, index) => (
+                      <div key={index} className="feature-input-group">
+                        <input
+                          type="text"
+                          value={feature}
+                          onChange={(e) => handleFeatureChange(index, e.target.value)}
+                          placeholder="Enter feature"
+                        />
+                        <button 
+                          type="button" 
+                          className="remove-feature-btn"
+                          onClick={() => removeFeature(index)}
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
+                      </div>
+                    ))}
+                    <button 
+                      type="button" 
+                      className="add-feature-btn"
+                      onClick={addFeature}
+                    >
+                      <i className="fas fa-plus"></i> Add Feature
+                    </button>
+                  </div>
+                </div>
+
+                <div className="form-section">
+                  <h3>Product Specifications</h3>
+                  <div className="specifications-list">
+                    {productData.specifications.map((spec, index) => (
+                      <div key={index} className="specification-input-group">
+                        <input
+                          type="text"
+                          value={spec.label}
+                          onChange={(e) => handleSpecificationChange(index, 'label', e.target.value)}
+                          placeholder="Specification Label"
+                        />
+                        <input
+                          type="text"
+                          value={spec.value}
+                          onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
+                          placeholder="Specification Value"
+                        />
+                        <button 
+                          type="button" 
+                          className="remove-specification-btn"
+                          onClick={() => removeSpecification(index)}
+                        >
+                          <i className="fas fa-times"></i>
+                        </button>
+                      </div>
+                    ))}
+                    <button 
+                      type="button" 
+                      className="add-specification-btn"
+                      onClick={addSpecification}
+                    >
+                      <i className="fas fa-plus"></i> Add Specification
+                    </button>
                   </div>
                 </div>
               </div>
