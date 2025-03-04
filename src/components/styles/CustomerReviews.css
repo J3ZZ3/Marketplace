@@ -30,7 +30,7 @@
 .review-summary {
   display: flex;
   gap: 3rem;
-  background: white;
+  background: rgb(160, 10, 10);
   padding: 2rem;
   border-radius: 12px;
   margin-bottom: 2rem;
@@ -75,7 +75,7 @@
 .bar-container {
   flex: 1;
   height: 8px;
-  background: #eee;
+  background: #2e1010;
   border-radius: 4px;
   overflow: hidden;
 }
@@ -100,7 +100,7 @@
 }
 
 .review-item {
-  background: white;
+  background: rgb(39, 10, 10);
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -149,7 +149,7 @@
 }
 
 /* Review Form Modal */
-.review-form-modal {
+.gg-review-form-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -162,16 +162,16 @@
   z-index: 1000;
 }
 
-.review-form-content {
-  background: white;
+.gg-review-form-content {
+  background: #00000000;
   padding: 2rem;
-  border-radius: 12px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 500px;
-  position: relative;
 }
 
-.close-modal {
+.gg-close-modal {
   position: absolute;
   top: 1rem;
   right: 1rem;

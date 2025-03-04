@@ -1,0 +1,47 @@
+.rf-review-form {
+  display: flex;
+  flex-direction: column;
+  background-color: #000000;
+  gap: 1rem; /* Space between form elements */
+}
+
+.rf-form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.rf-form-group label {
+  color: #2c3e50; /* Dark grey for labels */
+  margin-bottom: 0.5rem;
+}
+
+.rf-form-group input,
+.rf-form-group textarea {
+  padding: 0.8rem;
+  border: 2px solid #270606; /* Light grey border */
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.rf-form-group input:focus,
+.rf-form-group textarea:focus {
+  border-color: #fdd835; /* Yellow border on focus */
+  outline: none; /* Remove default outline */
+}
+
+.rf-submit-review-btn {
+  padding: 1rem;
+  background: #fdd835; /* Yellow background */
+  color: #000; /* Black text */
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.rf-submit-review-btn:hover {
+  background: #ffeb3b; /* Lighter yellow on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+} 

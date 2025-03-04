@@ -1,67 +1,38 @@
-import React, { useState } from 'react';
-import Swal from 'sweetalert2';
+import React, { useState, useEffect } from 'react';
+import { db } from '../firebase'; // Import Firestore
+import { collection, addDoc } from 'firebase/firestore';
+import ReviewForm from './ReviewForm'; // Import the ReviewForm component
 import './styles/CustomerReviews.css';
 
-const CustomerReviews = ({ reviews = [], productId }) => {
+const CustomerReviews = ({ productId, userId }) => {
   const [showReviewForm, setShowReviewForm] = useState(false);
-  const [newReview, setNewReview] = useState({
-    rating: 5,
-    comment: '',
-    name: ''
-  });
+  const [reviews, setReviews] = useState([]);
 
-  const handleReviewSubmit = async (e) => {
-    e.preventDefault();
-    
+  const handleReviewSubmit = async (review) => {
     try {
-      // Get the auth token
-      const token = localStorage.getItem('authToken');
-      if (!token) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Authentication Required',
-          text: 'Please log in to submit a review',
-        });
-        return;
-      }
-
-      const response = await fetch(`/api/products/${productId}/reviews`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          rating: newReview.rating,
-          comment: newReview.comment
-        })
+      // Add review to Firestore
+      await addDoc(collection(db, 'reviews'), {
+        userId: userId,
+        productId: productId,
+        name: review.name,
+        comment: review.comment,
+        rating: review.rating,
+        date: new Date(),
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to submit review');
-      }
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Thank you for your review!',
-        text: 'Your review has been submitted successfully.',
-        timer: 2000,
-        showConfirmButton: false
-      });
-
-      setShowReviewForm(false);
-      setNewReview({ rating: 5, comment: '', name: '' });
-      
-      // Trigger a refresh of the product details to show the new review
-      window.location.reload();
+      // Optionally, fetch updated reviews here
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Failed to submit review. Please try again.',
-      });
+      console.error('Error adding review: ', error);
     }
   };
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      // Fetch reviews from Firestore (optional)
+      // You can implement this if you want to display existing reviews
+    };
+
+    fetchReviews();
+  }, []);
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
@@ -118,49 +89,25 @@ const CustomerReviews = ({ reviews = [], productId }) => {
 
       {/* Review Form Modal */}
       {showReviewForm && (
-        <div className="review-form-modal">
-          <div className="review-form-content">
+        <div className="gg-review-form-modal">
+          <div className="gg-review-form-content" style={{ backgroundColor: '#666' }}>
             <button 
-              className="close-modal"
+              className="gg-close-modal"
               onClick={() => setShowReviewForm(false)}
             >
-              ×
+              
             </button>
-            <h3>Write a Review</h3>
-            <form onSubmit={handleReviewSubmit}>
-              <div className="form-group">
-                <label>Your Name</label>
-                <input
-                  type="text"
-                  value={newReview.name}
-                  onChange={(e) => setNewReview({...newReview, name: e.target.value})}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label>Rating</label>
-                <div className="rating-input">
-                  {[5, 4, 3, 2, 1].map((star) => (
-                    <i
-                      key={star}
-                      className={`fas fa-star ${star <= newReview.rating ? 'filled' : 'empty'}`}
-                      onClick={() => setNewReview({...newReview, rating: star})}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div className="form-group">
-                <label>Your Review</label>
-                <textarea
-                  value={newReview.comment}
-                  onChange={(e) => setNewReview({...newReview, comment: e.target.value})}
-                  required
-                />
-              </div>
-              <button type="submit" className="submit-review-btn">
-                Submit Review
+            <div className="review-form-content">
+              <button 
+                className="close-modal"
+                onClick={() => setShowReviewForm(false)}
+                style={{ position: 'absolute', top: '1rem', right: '1rem' }}
+              >
+                &times;
               </button>
-            </form>
+              <h3>Write a Review</h3>
+              <ReviewForm onSubmit={handleReviewSubmit} />
+            </div>
           </div>
         </div>
       )}
@@ -168,7 +115,7 @@ const CustomerReviews = ({ reviews = [], productId }) => {
       {/* Reviews List */}
       <div className="reviews-list">
         {reviews.map((review) => (
-          <div key={review.id} className="review-item">
+          <div className="review-item" key={review.id}>
             <div className="review-header">
               <div className="reviewer-info">
                 <span className="reviewer-name">{review.name}</span>
