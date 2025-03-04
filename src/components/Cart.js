@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart } from "../redux/actions";
 import { useNavigate } from 'react-router-dom';
@@ -10,7 +10,37 @@ const Cart = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const totalAmount = products.reduce((total, product) => total + product.price, 0);
+  // Initialize quantities state
+  const [quantities, setQuantities] = useState(
+    products.reduce((acc, product) => {
+      acc[product.id] = 1; // Default quantity to 1
+      return acc;
+    }, {})
+  );
+
+  useEffect(() => {
+    const savedCartItems = localStorage.getItem('cartItems');
+    if (savedCartItems) {
+      const cartItems = JSON.parse(savedCartItems);
+      cartItems.forEach(itemId => {
+        // Assuming you have a way to fetch product details by ID
+        // You might want to dispatch an action to fetch product details
+      });
+    }
+  }, []);
+
+  const handleQuantityChange = (productId, newQuantity) => {
+    setQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: Math.max(1, newQuantity), // Ensure quantity is at least 1
+    }));
+  };
+
+  const totalAmount = products.reduce((total, product) => {
+    const quantity = quantities[product.id] || 1; // Default to 1 if not set
+    const price = typeof product.price === 'string' ? parseFloat(product.price) : product.price;
+    return total + price * quantity;
+  }, 0);
 
   const handlePayNow = () => {
     const productDetails = products.map((product) => ({
@@ -25,6 +55,56 @@ const Cart = () => {
 
   const handleRemoveFromCart = (productId) => {
     dispatch(removeFromCart(productId));
+    const updatedQuantities = { ...quantities };
+    delete updatedQuantities[productId]; // Remove quantity for the removed product
+    setQuantities(updatedQuantities);
+  };
+
+  const handleClearCart = () => {
+    // Clear the cart in Redux and local storage
+    products.forEach(product => {
+      dispatch(removeFromCart(product.id));
+    });
+    localStorage.removeItem('cartItems'); // Clear local storage
+    setQuantities({}); // Reset quantities state
+  };
+
+  console.log(products); // Log the products array to inspect the price values
+
+  const renderCartItems = () => {
+    return products.map((product) => {
+      const price = typeof product.price === 'string' ? parseFloat(product.price) : product.price;
+      return (
+        <div key={product.id} className="cart-item">
+          <div className="item-image">
+            {product.imageUrl && (
+              <img src={product.imageUrl} alt={product.name} />
+            )}
+          </div>
+          <div className="item-details">
+            <h3>{product.name}</h3>
+            <input
+              type="number"
+              className="quantity-input"
+              value={quantities[product.id] || 1}
+              min="1"
+              onChange={(e) => handleQuantityChange(product.id, Number(e.target.value))}
+            />
+            <button 
+              onClick={() => handleRemoveFromCart(product.id)}
+              className="remove-button"
+            >
+              Remove
+            </button>
+          </div>
+          <div className="item-price">
+            <span className="price">
+              ${price.toFixed(2)}
+            </span>
+          </div>
+        </div>
+      );
+    });
   };
 
   return (
@@ -47,27 +127,7 @@ const Cart = () => {
                 </button>
               </div>
             ) : (
-              products.map((product) => (
-                <div key={product.id} className="cart-item">
-                  <div className="item-image">
-                    {product.imageUrl && (
-                      <img src={product.imageUrl} alt={product.name} />
-                    )}
-                  </div>
-                  <div className="item-details">
-                    <h3>{product.name}</h3>
-                    <button 
-                      onClick={() => handleRemoveFromCart(product.id)}
-                      className="remove-button"
-                    >
-                      Remove
-                    </button>
-                  </div>
-                  <div className="item-price">
-                    <span className="price">${product.price.toFixed(2)}</span>
-                  </div>
-                </div>
-              ))
+              renderCartItems()
             )}
           </div>
 
@@ -85,7 +145,7 @@ const Cart = () => {
                 </div>
                 <div className="summary-total">
                   <span>Total</span>
-                  <span>${totalAmount.toFixed(2)}</span>
+                  <span>${totalAmount > 0 ? totalAmount.toFixed(2) : '0.00'}</span>
                 </div>
                 <button onClick={handlePayNow} className="checkout-button">
                   Proceed to Checkout
@@ -94,6 +154,7 @@ const Cart = () => {
             </div>
           )}
         </div>
+        <button onClick={handleClearCart} className="clear-cart-button">Clear Cart</button>
       </div>
     </div>
   );

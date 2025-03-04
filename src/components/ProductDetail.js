@@ -15,6 +15,7 @@ const ProductDetail = () => {
   const dispatch = useDispatch();
   const [relatedProducts, setRelatedProducts] = useState([]);
   const [showFullDescription, setShowFullDescription] = useState(false);
+  const [isInCart, setIsInCart] = useState(false);
   
   const product = useSelector(state => 
     state.products.items.find(p => p.id === id)
@@ -32,6 +33,11 @@ const ProductDetail = () => {
     }
   }, [product, allProducts]);
 
+  useEffect(() => {
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    setIsInCart(savedCartItems.includes(product.id));
+  }, [product.id]);
+
   if (!product) {
     return (
       <div className="product-detail-error">
@@ -43,13 +49,10 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     dispatch(addToCart(product));
-    Swal.fire({
-      icon: 'success',
-      title: 'Added to Cart!',
-      text: `${product.name} has been added to your cart`,
-      timer: 1500,
-      showConfirmButton: false
-    });
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    savedCartItems.push(product.id);
+    localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
+    setIsInCart(true);
   };
 
   return (
@@ -109,8 +112,9 @@ const ProductDetail = () => {
               <button 
                 onClick={handleAddToCart}
                 className="add-to-cart-btn"
+                disabled={isInCart}
               >
-                Add to Cart
+                {isInCart ? 'In Cart' : 'Add to Cart'}
               </button>
               <button className="buy-now-btn">
                 Buy Now

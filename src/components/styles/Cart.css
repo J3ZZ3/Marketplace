@@ -192,3 +192,46 @@
       justify-self: end;
     }
   }
+  
+  /* Style for the quantity input field */
+  .quantity-input {
+    width: 60px; /* Set a fixed width for the input */
+    padding: 0.5rem; /* Add padding for better touch targets */
+    border: 1px solid var(--medium-grey); /* Border color */
+    border-radius: 4px; /* Rounded corners */
+    font-size: 1rem; /* Font size */
+    text-align: center; /* Center the text */
+    background-color: var(--dark-grey); /* Background color */
+    color: var(--white); /* Text color */
+    transition: border-color 0.3s ease; /* Smooth transition for border color */
+  }
+  
+  .quantity-input:focus {
+    outline: none; /* Remove default outline */
+    border-color: var(--primary-yellow); /* Change border color on focus */
+  }
+  
+  .quantity-input::-webkit-inner-spin-button,
+  .quantity-input::-webkit-outer-spin-button {
+    -webkit-appearance: none; /* Remove default spinner */
+    margin: 0; /* Remove margin */
+  }
+  
+  .clear-cart-button {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--red); /* Change to your desired color */
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1.5rem; /* Add some space above the button */
+  }
+  
+  .clear-cart-button:hover {
+    background-color: var(--dark-red); /* Change to a darker shade on hover */
+    transform: translateY(-2px);
+  }

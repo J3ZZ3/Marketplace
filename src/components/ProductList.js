@@ -24,7 +24,10 @@ import 'swiper/css/pagination';
 const ProductList = () => {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.products.items);
-  const [inCart, setInCart] = useState([]);
+  const [inCart, setInCart] = useState(() => {
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    return savedCartItems;
+  });
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -92,7 +95,11 @@ const ProductList = () => {
 
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
-    setInCart((prevInCart) => [...prevInCart, product.id]);
+    setInCart((prevInCart) => {
+      const updatedCart = [...prevInCart, product.id];
+      localStorage.setItem('cartItems', JSON.stringify(updatedCart));
+      return updatedCart;
+    });
   };
 
   const filterProducts = (products) => {

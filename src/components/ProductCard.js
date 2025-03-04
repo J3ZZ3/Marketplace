@@ -13,6 +13,10 @@ const ProductCard = ({ product, onAddToCart, isInCart }) => {
   const handleAddToCart = (e) => {
     e.stopPropagation(); // Prevent navigation when clicking the button
     onAddToCart(product);
+    // Save to localStorage
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    savedCartItems.push(product.id);
+    localStorage.setItem('cartItems', JSON.stringify(savedCartItems));
   };
 
   return (

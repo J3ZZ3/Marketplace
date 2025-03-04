@@ -17,6 +17,7 @@ import ProductDetail from './components/ProductDetail';
 import Footer from './components/Footer';
 import ViewCategoryList from './components/ViewCategoryList';
 import EditProduct from './components/EditProduct';
+import TestPayment from './components/TestPayment';
 
 function App() {
   const dispatch = useDispatch();
@@ -86,6 +87,7 @@ function App() {
           </ProtectedRoute>
         } />
         <Route path="/category/:category" element={<ViewCategoryList />} />
+        <Route path="/test-payment" element={<TestPayment />} />
       </Routes>
       <Footer />
     </Router>

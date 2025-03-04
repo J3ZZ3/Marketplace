@@ -19,7 +19,7 @@ const Payment = () => {
     }
 
     const loadPayPalScript = () => {
-      // Remove any existing PayPal script
+      // Check if the script is already added
       if (scriptRef.current) {
         document.body.removeChild(scriptRef.current);
       }
@@ -32,7 +32,7 @@ const Payment = () => {
       const script = document.createElement('script');
       script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.REACT_APP_PAYPAL_CLIENT_ID}`;
       script.async = true;
-      
+
       script.onload = () => {
         console.log('PayPal SDK loaded successfully');
         window.paypal.Buttons({
@@ -47,7 +47,6 @@ const Payment = () => {
           },
           onApprove: async (data, actions) => {
             const details = await actions.order.capture();
-            
             const purchaseData = {
               products: productDetails,
               totalAmount: totalAmount,
@@ -69,6 +68,11 @@ const Payment = () => {
         }).render(paypalButtonRef.current);
       };
 
+      script.onerror = (err) => {
+        console.error('PayPal SDK failed to load:', err);
+        alert('Failed to load PayPal SDK. Please try again later.');
+      };
+
       scriptRef.current = script;
       document.body.appendChild(script);
     };
@@ -79,6 +83,10 @@ const Payment = () => {
       // Cleanup on unmount
       if (scriptRef.current) {
         document.body.removeChild(scriptRef.current);
+        scriptRef.current = null; // Clear the reference
+      }
+      if (paypalButtonRef.current) {
+        paypalButtonRef.current.innerHTML = ''; // Clear the PayPal button
       }
     };
   }, [totalAmount, navigate, location.state, productDetails]);
@@ -95,13 +103,15 @@ const Payment = () => {
 
     let yPosition = 70;
     purchaseData.products.forEach(product => {
-      doc.text(`- ${product.name}: $${product.price}`, 10, yPosition);
+      doc.text(`- ${product.name}: $${typeof product.price === 'number' ? product.price.toFixed(2) : 'N/A'}`, 10, yPosition);
       yPosition += 10;
     });
 
     doc.text(`Date: ${purchaseData.createdAt}`, 10, yPosition);
     doc.save("payment_receipt.pdf");
   };
+
+  console.log(productDetails); // Log the product details array to inspect the price values
 
   return (
     <div className="p-payment-container">
@@ -124,7 +134,9 @@ const Payment = () => {
                       />
                     )}
                     <h5 className="p-product-name">{product.name}</h5>
-                    <p className="p-product-price">${product.price.toFixed(2)}</p>
+                    <p className="p-product-price">
+                      ${typeof product.price === 'number' ? product.price.toFixed(2) : 'N/A'}
+                    </p>
                   </li>
                 ))}
               </ul>

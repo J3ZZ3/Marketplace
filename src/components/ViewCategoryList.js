@@ -18,7 +18,10 @@ const ViewCategoryList = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
-  const [inCart, setInCart] = useState([]);
+  const [inCart, setInCart] = useState(() => {
+    const savedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+    return savedCartItems;
+  });
 
   useEffect(() => {
     const fetchCategoryProducts = async () => {
