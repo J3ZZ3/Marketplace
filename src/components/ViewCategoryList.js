@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/actions';
 import { db } from '../firebase';
 import { collection, query, where, getDocs } from 'firebase/firestore';
@@ -8,12 +8,14 @@ import Navbar from './Navbar';
 import ProductCard from './ProductCard';
 import Swal from 'sweetalert2';
 import './styles/ViewCategoryList.css';
+import SearchBar from './SearchBar';
 
 const ViewCategoryList = () => {
   const { category } = useParams();
   const dispatch = useDispatch();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState('');
   const [error, setError] = useState(null);
   const [sortBy, setSortBy] = useState('newest');
   const [inCart, setInCart] = useState([]);
@@ -58,6 +60,12 @@ const ViewCategoryList = () => {
     });
   };
 
+  const filterProducts = (products) => {
+    return products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
   const handleSort = (e) => {
     const sortValue = e.target.value;
     setSortBy(sortValue);
@@ -79,10 +87,13 @@ const ViewCategoryList = () => {
     setProducts(sortedProducts);
   };
 
+  const filteredProducts = filterProducts(products);
+
   return (
     <div>
       <Navbar />
       <div className="category-list-container">
+        <SearchBar query={searchQuery} onSearch={setSearchQuery} />
         <div className="category-header">
           <h1 className="category-title">
             {category.charAt(0).toUpperCase() + category.slice(1)} Products
@@ -109,13 +120,13 @@ const ViewCategoryList = () => {
           <div className="error-container">
             <p className="error-message">{error}</p>
           </div>
-        ) : products.length === 0 ? (
+        ) : filteredProducts.length === 0 ? (
           <div className="no-products">
             <h2>No products found in this category</h2>
           </div>
         ) : (
           <div className="products-grid">
-            {products.map(product => (
+            {filteredProducts.map(product => (
               <ProductCard
                 key={product.id}
                 product={product}

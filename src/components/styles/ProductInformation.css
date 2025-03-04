@@ -2,6 +2,7 @@
   margin-top: 4rem;
   padding-top: 2rem;
   border-top: 1px solid var(--medium-grey);
+  
 }
 
 .section-title {
@@ -23,16 +24,20 @@
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
   padding: 2rem;
+  background: var(--dark-grey);
+
 }
 
 .info-tab {
   padding: 1.5rem;
-  background: #f8f9fa;
+  background: #fff;
   border-radius: 8px;
+  background: var(--dark-grey);
+
 }
 
 .info-tab h3 {
-  color: #2c3e50;
+  color: #fff;
   font-size: 1.2rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.8rem;
@@ -43,23 +48,25 @@
 .specifications-grid {
   display: grid;
   gap: 1rem;
+  background: var(--dark-grey);
+
 }
 
 .spec-item {
   display: flex;
   justify-content: space-between;
   padding: 0.8rem;
-  background: #fff;
+  background: var(--dark-grey);
   border-radius: 6px;
 }
 
 .spec-label {
-  color: #666;
+  color: #FFF;
   font-weight: 500;
 }
 
 .spec-value {
-  color: #2c3e50;
+  color: #666;
   font-weight: 600;
 }
 
@@ -67,6 +74,8 @@
 .features-list {
   list-style: none;
   padding: 0;
+  background: var(--dark-grey);
+
 }
 
 .features-list li {
@@ -74,7 +83,7 @@
   align-items: center;
   gap: 0.8rem;
   padding: 0.8rem;
-  background: #fff;
+  background: var(--dark-grey);
   border-radius: 6px;
   margin-bottom: 0.8rem;
 }
@@ -95,7 +104,7 @@
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  background: #fff;
+  background: var(--dark-grey);
   border-radius: 6px;
 }
 
@@ -112,7 +121,7 @@
 }
 
 .shipping-details h4 {
-  color: #2c3e50;
+  color: #FFF;
   font-size: 1rem;
   margin: 0 0 0.3rem 0;
 }

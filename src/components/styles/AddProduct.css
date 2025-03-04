@@ -271,4 +271,47 @@ input[type="url"].disabled {
   .image-preview-container {
     height: 200px;
   }
+}
+
+.features-list, .specifications-list {
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #f9f9f900;
+}
+
+.feature-input-group, .specification-input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.feature-input, .specification-label-input, .specification-value-input {
+  flex: 1;
+  padding: 0.5rem;
+  margin-right: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.remove-feature-btn, .remove-specification-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.add-feature-btn, .add-specification-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.add-feature-btn:hover, .add-specification-btn:hover,
+.remove-feature-btn:hover, .remove-specification-btn:hover {
+  opacity: 0.8;
 } 

@@ -15,6 +15,7 @@ import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import AdComponent from './ads/AdComponent';
+import SearchBar from './SearchBar';
 
 // Import Swiper styles
 import 'swiper/css';
@@ -92,17 +93,6 @@ const ProductList = () => {
   const handleAddToCart = (product) => {
     dispatch(addToCart(product));
     setInCart((prevInCart) => [...prevInCart, product.id]);
-    Swal.fire({
-      icon: 'success',
-      title: 'Added to Cart!',
-      text: `${product.name} has been added to your cart`,
-      showConfirmButton: false,
-      timer: 1500
-    });
-  };
-
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value.toLowerCase());
   };
 
   const filterProducts = (products) => {
@@ -132,15 +122,7 @@ const ProductList = () => {
             
             <h2 className="product-list-title">Pillock Marketplace</h2>
             
-            <div className="search-container">
-              <input
-                type="text"
-                className="search-bar"
-                placeholder="Search for a product..."
-                value={searchQuery}
-                onChange={handleSearch}
-              />
-            </div>
+            <SearchBar query={searchQuery} onSearch={setSearchQuery} />
 
             {loading ? (
               <div className="loading-container">

@@ -34,17 +34,13 @@ const uploadImageToCloudinary = async (file) => {
   return response.data.secure_url; // Return the URL of the uploaded image
 };
 
-export const addProduct = (product, imageFile) => async dispatch => {
+export const addProduct = (product) => async (dispatch) => {
   try {
-    // Upload image to Cloudinary
-    const imageUrl = await uploadImageToCloudinary(imageFile);
-    
-    // Add product with image URL
-    const newProduct = { ...product, imageUrl }; // Assuming product has other properties
-    const docRef = await addDoc(collection(db, 'products'), newProduct);
-    dispatch({ type: ADD_PRODUCT, payload: { id: docRef.id, ...newProduct } });
+    const docRef = await addDoc(collection(db, 'products'), product);
+    dispatch({ type: ADD_PRODUCT, payload: { id: docRef.id, ...product } });
   } catch (error) {
     console.error('Error adding product:', error);
+    throw error;
   }
 };
 

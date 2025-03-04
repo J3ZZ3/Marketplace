@@ -34,7 +34,8 @@ const AddProduct = () => {
     sku: '',
     stock: '',
     specifications: [],
-    features: []
+    features: [],
+    userId: user ? user.uid : null // Include user ID
   });
   const [imageFile, setImageFile] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -138,9 +139,9 @@ const AddProduct = () => {
     e.preventDefault();
     setIsUploading(true);
     try {
-      await dispatch(addProduct(productData)); // Add product with Base64 image
+      await dispatch(addProduct(productData)); // Ensure productData contains all necessary fields
       Swal.fire('Success', 'Product added successfully!', 'success');
-      navigate('/products');
+      navigate('/products'); // Redirect to products page after adding
     } catch (error) {
       Swal.fire('Error', 'Failed to add product', 'error');
     } finally {
@@ -283,6 +284,7 @@ const AddProduct = () => {
                           value={feature}
                           onChange={(e) => handleFeatureChange(index, e.target.value)}
                           placeholder="Enter feature"
+                          className="feature-input"
                         />
                         <button 
                           type="button" 
@@ -313,12 +315,14 @@ const AddProduct = () => {
                           value={spec.label}
                           onChange={(e) => handleSpecificationChange(index, 'label', e.target.value)}
                           placeholder="Specification Label"
+                          className="specification-label-input"
                         />
                         <input
                           type="text"
                           value={spec.value}
                           onChange={(e) => handleSpecificationChange(index, 'value', e.target.value)}
                           placeholder="Specification Value"
+                          className="specification-value-input"
                         />
                         <button 
                           type="button" 

@@ -135,6 +135,7 @@ const ProductDetail = () => {
 
         <ProductInformation product={product} />
         
+
         <RelatedProducts 
           products={relatedProducts}
           onAddToCart={(product) => {

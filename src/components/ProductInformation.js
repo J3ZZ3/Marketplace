@@ -8,27 +8,6 @@ const ProductInformation = ({ product }) => {
     <div className="product-information-section">
       <h2 className="section-title">Product Information</h2>
       <div className="product-information-content">
-        <div className="tab-buttons">
-          <button 
-            className={`tab-button ${activeTab === 'specifications' ? 'active' : ''}`}
-            onClick={() => setActiveTab('specifications')}
-          >
-            Specifications
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'features' ? 'active' : ''}`}
-            onClick={() => setActiveTab('features')}
-          >
-            Features
-          </button>
-          <button 
-            className={`tab-button ${activeTab === 'shipping' ? 'active' : ''}`}
-            onClick={() => setActiveTab('shipping')}
-          >
-            Shipping
-          </button>
-        </div>
-
         <div className="info-tabs">
           <div className={`info-tab ${activeTab === 'specifications' ? 'active' : ''}`}>
             <h3>Specifications</h3>
@@ -45,14 +24,12 @@ const ProductInformation = ({ product }) => {
                 <span className="spec-label">SKU</span>
                 <span className="spec-value">{product.sku || 'N/A'}</span>
               </div>
-              {product.specifications && Object.entries(product.specifications)
-                .filter(([key]) => !['Brand', 'Model', 'SKU'].includes(key))
-                .map(([key, value]) => (
-                  <div key={key} className="spec-item">
-                    <span className="spec-label">{key}</span>
-                    <span className="spec-value">{value}</span>
-                  </div>
-              ))}
+              {product.specifications && product.specifications.map((spec, index) => (
+            <div key={index} className="spec-item">
+              <span className="spec-label">{spec.label}</span>
+              <span className="spec-value">{spec.value}</span>
+            </div>
+          ))}
             </div>
           </div>
 
